@@ -14,6 +14,7 @@ import {
     getHobbyById,
     updateHobby,
     deleteHobby,
+    createHobbyOnUser,
 } from '../controllers/hobbyController';
 
 const router = express.Router();
@@ -26,9 +27,11 @@ router.delete('/users/:id', deleteUser);
 
 router.get('/hobbies', getAllHobbies);
 router.post('/hobbies', createHobby);
+router.post('/hobbies/user', createHobbyOnUser);
 router.get('/hobbies/:id', getHobbyById);
 router.put('/hobbies/:id', updateHobby);
 router.delete('/hobbies/:id', deleteHobby);
+
 
 
 export default router;

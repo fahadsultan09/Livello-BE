@@ -6,13 +6,16 @@ import config from './config.json' // configurations
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3001',
+    methods: 'GET, POST, PUT , DELETE', // Add the allowed methods
+    credentials: true, // If you need to handle cookies or authentication
+  }));
 app.use(express.json());
 
 app.use('/api', routes);
 
 const { mongoose: { url } } = config
-console.log("URL ----", url)
 mongoose.connect(url)
     .then(() => {
         console.log('Connected to MongoDB');

@@ -6,25 +6,18 @@ import { successResponse, errorResponse } from '../helpers/responseHelpers';
 
 export const getAllUsers = async (req: Request, res: Response) => {
 	try {
-		console.log("getAllUsers ==============>")
 		const users = await User.find().populate('hobbies');
-		console.log("USERS ===============>", users)
 		res.status(StatusCodes.OK).send(successResponse(users, 'User data fetched successfully'));
 	} catch (error) {
-		console.log("ERROR=========", error)
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse('Internal server error', StatusCodes.INTERNAL_SERVER_ERROR));
 	}
 };
 
 export const createUser = async (req: Request, res: Response) => {
 	try {
-		// const { error } = userSchema.validate(req.body);
-		// if (error) {
-		//   return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
-		// }
 
 		const newUser = await User.create(req.body);
-		res.status(StatusCodes.CREATED).json(newUser);
+		res.status(StatusCodes.CREATED).send(successResponse(newUser, 'User Successfully created'));
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse('Internal server error', StatusCodes.INTERNAL_SERVER_ERROR));
 	}
@@ -48,10 +41,6 @@ export const getUserById = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
 	try {
 		const userId = req.params.id;
-		// const { error } = userSchema.validate(req.body);
-		// if (error) {
-		//   return res.status(StatusCodes.BAD_REQUEST).json({ error: error.details[0].message });
-		// }
 
 		const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
 		if (!updatedUser) {
